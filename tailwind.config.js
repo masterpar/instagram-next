@@ -6,7 +6,11 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      rotate: {
+        '270' : '270deg'
+      }
+    },
   },
-  plugins: [],
+  plugins: [ require('@tailwindcss/forms')],
 }

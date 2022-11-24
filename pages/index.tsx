@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Header from '../components/Header'
+import { Header, Feed} from '../components'
 
 const Home: NextPage = () => {
   return (
-    <div className="">
+    <div className="bg-gray-50 h-screen overflow-y-scroll scrollbar-hiden ">
       <Head>
         <title>Instagram next</title>
         <link rel="icon" href="/favicon.ico" />
@@ -14,6 +14,7 @@ const Home: NextPage = () => {
         <Header/>
 
         {/*Feed*/}
+        <Feed/>
 
         {/*Modal*/}
     </div>

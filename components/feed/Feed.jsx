@@ -1,4 +1,5 @@
-import Stories from "./stories/Stories";
+import Stories from "../stories/Stories";
+import Posts from "../posts/Posts";
 
 
 function Feed() {
@@ -11,13 +12,14 @@ function Feed() {
                 {/*  stories*/}
                 <Stories/>
                 {/* post*/}
+                <Posts/>
             </section>
 
 
             {/*section right*/}
             <section className="">
                 {/*  mini-profile*/}
-                <h2>profile</h2>
+
                 {/*  suggestion*/}
             </section>
 

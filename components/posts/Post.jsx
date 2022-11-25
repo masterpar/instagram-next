@@ -11,7 +11,7 @@ import {
 
 function Post({ id, username, img, caption}) {
     return (
-        <div className="bg-white my-7 border rounded-lg mx-7">
+        <div className="bg-white my-7 border rounded-lg ">
 
             {/*Header*/}
             <div className="flex items-center p-3">

@@ -19,7 +19,7 @@ function Feed() {
 
 
             {/*section right*/}
-            <section className="hidden xl:inline-grid md:col-span-1">
+            <section className="hidden xl:inline-grid md:col-span-1 mx-0">
                <div className="fixed top-20">
 
                    {/*  mini-profile*/}

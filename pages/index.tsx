@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Header from '../components/header/Header'
 import Feed from '../components/feed/Feed'
+import ModalUpload from '../components/modals/ModalUpload'
 
 
 const Home: NextPage = () => {
@@ -19,6 +20,7 @@ const Home: NextPage = () => {
         <Feed/>
 
         {/*Modal*/}
+        <ModalUpload />
     </div>
   )
 }

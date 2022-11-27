@@ -19,6 +19,17 @@ export default NextAuth({
         // verifyRequest: '/auth/verify-request', // Used for check email page
         // newUser: null // If set, new users will be directed here on first sign in
     },
+    callbacks: {
+        async session({session, token, user}){
+            session.user.username = session.user.name
+                .split(' ')
+                .join('')
+                .toLowerCase()
+
+            session.user.uid = token.sub
+            return session
+        }
+    }
 
 
 })

@@ -40,7 +40,7 @@ function Header() {
             </div>
             <div
                 className="relative mt-4 w-8 h-8 lg:hidden flex-shrink-0 cursor-pointer items-center"
-                onclick={() => router.push('/')}
+                onClick={() => router.push('/')}
             >
                 <Image
                     src="https://cdn.pixabay.com/photo/2016/08/01/21/02/icon-1562139_960_720.png"

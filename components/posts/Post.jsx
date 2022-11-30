@@ -9,15 +9,15 @@ import {
 
 
 
-function Post({ id, username, img, caption}) {
+function Post({ id, username, image, profileImg, caption}) {
     return (
         <div className="bg-white my-7 border rounded-lg ">
 
             {/*Header*/}
             <div className="flex items-center p-3">
                 <img
-                    src={img}
-                    alt={username}
+                    src={profileImg}
+                    alt=''
                     className="rounded-full h-12 w-12 object-contain
                                border p-1 mr-3  cursor-pointer"
                 />
@@ -28,7 +28,7 @@ function Post({ id, username, img, caption}) {
             </div>
 
             {/*img*/}
-            <img src='https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_960_720.png'
+            <img src={image}
                    alt={username}
                    className="object-cover w-full"
             />
@@ -50,7 +50,7 @@ function Post({ id, username, img, caption}) {
             {/*caption*/}
             <p className="py-2 ml-5 truncate">
                 <span className='font-bold mr-1'>
-                    {username}
+                    {caption}
                 </span>
             </p>
 
@@ -61,11 +61,12 @@ function Post({ id, username, img, caption}) {
                 <FaceSmileIcon className="h-7"/>
                 <input
                     type="text"
-                    placeholder="add comment..."
+                    placeholder="Añadir Comentario ..."
                     className="flex-1 focus:ring-0 border-0" />
                 <button
                     className='font-semibold text-blue-400 mr-3'>
-                    Post
+                    Enviar
+                    <PaperAirplaneIcon className="navBtn ml-2"/>
                 </button>
             </form>
         </div>

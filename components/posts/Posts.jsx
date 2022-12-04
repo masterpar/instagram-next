@@ -5,10 +5,11 @@ import { onSnapshot, collection, query, orderBy} from '@firebase/firestore'
 import {db} from "../../firebase";
 
 
+
 function Posts() {
 
     const [posts, setPosts] = useState([]);
-    console.log(posts)
+
     useEffect(() =>
         onSnapshot(
             query(collection(db,'posts'), orderBy('timestamp','desc')),
@@ -18,10 +19,11 @@ function Posts() {
             )
     ,[db])
 
+
     return (
         <div>
             { posts.map(post => (
-                <Post key={post.id} {...post.data()}/>
+                <Post key={post.id} id={post.id} {...post.data()}/>
             ))}
         </div>
     )

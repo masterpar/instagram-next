@@ -1,7 +1,6 @@
 import {addDoc, collection, doc, serverTimestamp, updateDoc} from "@firebase/firestore";
 import {db, storage} from "../firebase";
 import {getDownloadURL, ref, uploadString} from "@firebase/storage";
-import {useSession} from "next-auth/react";
 
 
 export const uploadPost = async (session, captionRef, selectedFile) => {

@@ -115,7 +115,9 @@ function Post({ id, username, image, profileImg, caption}) {
             </div>
 
             {/*Like*/}
-            <p className="ml-5 font-medium text-sm mb-4"> 12,300 Likes</p>
+            { likes.length > 0 && (
+                <p className="ml-5 font-bold text-md mb-4"> { likes.length } Likes</p>
+            )}
 
             {/*caption*/}
             { session &&

@@ -1,8 +1,9 @@
 import Moment from "react-moment";
 import 'moment/locale/es'
 
-function Comments({ comments}) {
-    return (
+function Comments({ comments }) {
+
+        return (
         <div className="ml-10 h-20 overflow-y-scroll
                                 scrollbar-thumb-black scrollbar-thin">
             { comments.map(comment => (

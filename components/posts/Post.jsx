@@ -6,43 +6,66 @@ import {
     BookmarkIcon,
     FaceSmileIcon,
 } from '@heroicons/react/24/outline'
+import { HeartIcon as HeartLike } from '@heroicons/react/24/solid'
 import Comments from "../comments/comments";
 import {useSession} from "next-auth/react";
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 
-import {addDoc, collection, onSnapshot, query, serverTimestamp, orderBy} from "@firebase/firestore";
+import {sendComment} from "../../firebase/comment.firebase";
+import {collection, onSnapshot, orderBy, query,doc, setDoc, deleteDoc} from "@firebase/firestore";
 import {db} from "../../firebase";
 
 
-
+//#Todo component
 function Post({ id, username, image, profileImg, caption}) {
 
     const { data: session } = useSession()
+    const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-    const [comment, setComment] = useState("");
+    const [likes, setLikes] = useState([]);
+    const [hasLiked, setHasLiked] = useState(false);
 
+    //get comments
     useEffect(
         () => onSnapshot(query(
-            collection(db,'posts', id, 'comments'),
-            orderBy('timestamp','desc')
+                collection(db,'posts', id, 'comments'),
+                orderBy('timestamp','desc')
             ),
-        (snapshot) => setComments(snapshot.docs)),
-     [db]);
+            (snapshot) => setComments(snapshot.docs)),
+            [db]);
+
+    //get likes
+    useEffect(
+        () =>  onSnapshot( collection(db, 'posts', id, 'likes'),
+        (snapshot) =>  setLikes(snapshot.docs))
+        ,[db, id])
+
+    //compare Likes user
+    useEffect(() => setHasLiked(
+        likes.findIndex((like) => like.id === session?.user?.uid) !== -1
+        )
+    , [likes]);
 
 
-    //send comment
-    const sendComment = async (e) => {
+    //send likes pots button
+    const likePost = async () => {
+
+        if(hasLiked){
+            await deleteDoc( doc(db,'posts', id, 'likes', session.user.uid))
+        } else {
+            await setDoc(doc(db, 'posts', id, 'likes', session.user.uid), {
+                username: session.user.username
+            })
+        }
+    }
+
+    //send button comment
+    const getSendComment = async (e) => {
       e.preventDefault();
 
         const commentToSend = comment
         setComment("")
-
-        await addDoc( collection(db, 'posts', id, 'comments'),{
-            comment: commentToSend,
-            username: session.user.username,
-            userImage: session.user.image,
-            timestamp: serverTimestamp()
-        })
+        await sendComment(id, commentToSend, session)
 
     }
 
@@ -72,7 +95,18 @@ function Post({ id, username, image, profileImg, caption}) {
             {/*Buttons*/}
             <div className="flex ml-4 py-3 justify-between">
                 <div className="flex ">
-                    <HeartIcon className="btn"/>
+                    { hasLiked ? (
+                        <HeartLike
+                            className="btn text-red-600"
+                            onClick={likePost}
+                        />
+                    ) : (
+                        <HeartIcon
+                            className="btn"
+                            onClick={likePost}
+                        />
+                    )
+                    }
                     <ChatBubbleOvalLeftEllipsisIcon className="btn"/>
                     <PaperAirplaneIcon className="btn"/>
                 </div>
@@ -85,19 +119,17 @@ function Post({ id, username, image, profileImg, caption}) {
 
             {/*caption*/}
             { session &&
-                <p className="mb-3 ml-5 truncate flex items-center">
+                <div className="mb-3 ml-5 truncate flex items-center">
                 <span className='font-bold '>
                     {username}</span>
                     <p className="ml-1 font-normal "> { caption }</p>
 
-                </p>
+                </div>
             }
 
 
             {/*comments*/}
-            { comments.length > 0 && (
-                <Comments comments={comments} />
-            )}
+                <Comments comments={comments} setComments={setComments} />
 
             {/*input box*/}
             {session &&
@@ -112,7 +144,7 @@ function Post({ id, username, image, profileImg, caption}) {
                     <button
                         type="submit"
                         disabled={!comment.trim()}
-                        onClick={sendComment}
+                        onClick={getSendComment}
                         className='font-semibold text-blue-400 mr-3'>
                         Enviar
                         <PaperAirplaneIcon className="navBtn ml-2"/>

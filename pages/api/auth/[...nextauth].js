@@ -11,7 +11,7 @@ export default NextAuth({
         }),
 
     ],
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/auth/signin',  // Displays signin buttons
         // signOut: '/auth/signout', // Displays form with sign out button

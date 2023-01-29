@@ -6,6 +6,8 @@ import Header from "../../components/header/Header";
 
 //Browser
 function SignIn({ providers }) {
+
+    console.log(providers)
     return (
         <>
             <Header/>
